@@ -1,5 +1,3 @@
-// Sample C++ code
-
 #include <iostream>
 #include <vector>
 #include <iomanip>
@@ -7,20 +5,31 @@ using namespace std;
 
 int main() {
 
+    // =================================
     // 1. VARIAVEIS E TIPOS DE DADOS
+    // =================================
+
     float temperatura;
     float temperaturaDesejada = 22.0;
     float soma, media;
-    int opcao;
+
+    int opcao = 0;
     char continuar;
 
-    // VETOR PARA ARMAZENAR AS TEMPERATURAS
+    // VETOR PARA GUARDAR AS TEMPERATURAS
     vector<float> historico;
 
-    // 2. ESTRUTURA DE REPETICAO WHILE
+
+    // =================================
+    // 2. MENU PRINCIPAL (WHILE)
+    // =================================
+
     while (opcao != 6) {
 
-        cout << "\n===== CONTROLE DE TEMPERATURA =====" << endl;
+        cout << "\n==================================" << endl;
+        cout << "   SISTEMA DE CONTROLE DE TEMPERATURA" << endl;
+        cout << "==================================" << endl;
+
         cout << "Temperatura desejada: "
              << temperaturaDesejada << " C" << endl;
 
@@ -34,31 +43,54 @@ int main() {
         cout << "\n\nEscolha uma opcao: ";
         cin >> opcao;
 
-        // 3. ESTRUTURA CONDICIONAL SWITCH
+
+        // =================================
+        // 3. PROCESSAMENTO (SWITCH)
+        // =================================
+
         switch (opcao) {
+
+
+            // ---------------------------------
+            // OPCAO 1 - REGISTRAR TEMPERATURA
+            // ---------------------------------
 
             case 1:
 
-                // ENTRADA E REPETICAO DO-WHILE
                 do {
+
                     cout << "\nDigite a temperatura atual: ";
                     cin >> temperatura;
 
+                    // ARMAZENAR NO VETOR
                     historico.push_back(temperatura);
 
-                    // PROCESSAMENTO E IF/ELSE
+
+                    // COMPARAR TEMPERATURAS (IF / ELSE)
+
                     if (temperatura > temperaturaDesejada) {
-                        cout << "Temperatura alta!" << endl;
+
+                        cout << "\nTemperatura alta!" << endl;
                         cout << "LIGAR AR-CONDICIONADO." << endl;
+
                     }
+
                     else if (temperatura < temperaturaDesejada) {
-                        cout << "Temperatura baixa!" << endl;
+
+                        cout << "\nTemperatura baixa!" << endl;
                         cout << "LIGAR AQUECEDOR." << endl;
+
                     }
+
                     else {
-                        cout << "Temperatura ideal!" << endl;
+
+                        cout << "\nTemperatura ideal!" << endl;
                         cout << "SISTEMA EM EQUILIBRIO." << endl;
+
                     }
+
+
+                    // REPETICAO DO-WHILE
 
                     cout << "\nDeseja registrar outra temperatura? (s/n): ";
                     cin >> continuar;
@@ -67,59 +99,88 @@ int main() {
 
                 break;
 
+
+            // ---------------------------------
+            // OPCAO 2 - CONSULTAR HISTORICO
+            // ---------------------------------
+
             case 2:
 
-                // SAIDA E VETOR
-                cout << "\n===== HISTORICO =====" << endl;
+                cout << "\n========== HISTORICO ==========" << endl;
 
                 if (historico.empty()) {
+
                     cout << "Nenhuma temperatura registrada." << endl;
+
                 }
+
                 else {
+
                     for (int i = 0; i < historico.size(); i++) {
+
                         cout << "Registro " << i + 1 << ": "
                              << historico[i] << " C" << endl;
+
                     }
+
                 }
 
                 break;
 
+
+            // ---------------------------------
+            // OPCAO 3 - CALCULAR MEDIA
+            // ---------------------------------
+
             case 3:
 
-                // OPERADORES E CALCULO DA MEDIA
                 if (historico.empty()) {
-                    cout << "Nenhum dado para calcular." << endl;
+
+                    cout << "\nNenhuma temperatura para calcular." << endl;
+
                 }
+
                 else {
+
                     soma = 0;
 
                     for (int i = 0; i < historico.size(); i++) {
+
                         soma = soma + historico[i];
+
                     }
 
                     media = soma / historico.size();
 
                     cout << fixed << setprecision(2);
-                    cout << "Media das temperaturas: "
+
+                    cout << "\nMedia das temperaturas: "
                          << media << " C" << endl;
+
                 }
 
                 break;
 
+
+            // ---------------------------------
+            // OPCAO 4 - ALTERAR TEMPERATURA
+            // ---------------------------------
+
             case 4:
 
-                // ALTERAR TEMPERATURA DESEJADA
                 cout << "\nDigite a nova temperatura desejada: ";
                 cin >> temperaturaDesejada;
 
-                cout << "Temperatura atualizada com sucesso!" << endl;
+                cout << "\nTemperatura atualizada com sucesso!" << endl;
 
                 break;
 
-            case 5: {
 
-                // 4. MATRIZ 7x4
-                // 7 dias e 4 medicoes por dia
+            // ---------------------------------
+            // OPCAO 5 - RELATORIO EM MATRIZ
+            // ---------------------------------
+
+            case 5: {
 
                 float matriz[7][4] = {};
                 bool ocupada[7][4] = {};
@@ -127,44 +188,84 @@ int main() {
                 int limite = historico.size();
 
                 if (limite > 28) {
+
                     limite = 28;
+
                 }
+
+
+                // PREENCHER A MATRIZ
 
                 for (int i = 0; i < limite; i++) {
+
                     matriz[i / 4][i % 4] = historico[i];
+
                     ocupada[i / 4][i % 4] = true;
+
                 }
 
-                cout << "\n===== RELATORIO EM MATRIZ =====" << endl;
+
+                // EXIBIR RELATORIO
+
+                cout << "\n========== RELATORIO ==========" << endl;
 
                 for (int i = 0; i < 7; i++) {
+
                     cout << "\nDia " << i + 1 << ": ";
 
                     for (int j = 0; j < 4; j++) {
 
                         if (ocupada[i][j]) {
+
                             cout << matriz[i][j] << " C\t";
+
                         }
+
                         else {
+
                             cout << "--\t";
+
                         }
+
                     }
+
                 }
 
                 cout << endl;
+
                 break;
+
             }
+
+
+            // ---------------------------------
+            // OPCAO 6 - ENCERRAR SISTEMA
+            // ---------------------------------
 
             case 6:
 
                 cout << "\nSistema encerrado!" << endl;
+
                 break;
+
+
+            // ---------------------------------
+            // OPCAO INVALIDA
+            // ---------------------------------
 
             default:
 
                 cout << "\nOpcao invalida! Tente novamente." << endl;
+
         }
+
     }
 
+
+    // =================================
+    // 4. FINALIZACAO DO PROGRAMA
+    // =================================
+
     return 0;
+
 }
